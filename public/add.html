@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Student</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Add Student</h1>
+
+    <form action="/add-student" method="POST">
+        <input type="text" name="name" placeholder="Student Name" required>
+        <input type="text" name="roll" placeholder="Roll Number" required>
+        <input type="number" name="marks" placeholder="Marks" required>
+
+        <button type="submit" class="button add">Submit</button>
+    </form>
+
+    <a href="/" class="button view">Back to Home</a>
+</div>
+
+</body>
+</html>
