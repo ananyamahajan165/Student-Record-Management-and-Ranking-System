@@ -25,7 +25,7 @@ The project demonstrates client-server architecture, RESTful API development, ro
 - Node.js
 - Express.js
 - JavaScript
-- HTML
+- HTML (Hyper Text Markup Language)
 - CSS
 - Thunder Client (API Testing)
 
