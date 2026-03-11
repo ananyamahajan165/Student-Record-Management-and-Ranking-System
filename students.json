@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Ananya Mahajan",
+    "roll": "1",
+    "marks": 91
+  },
+  {
+    "name": "Arjun Sharma",
+    "roll": "2",
+    "marks": 95
+  },
+  {
+    "name": "Riya Verma",
+    "roll": "3",
+    "marks": 78
+  },
+  {
+    "name": "Kabir Singh",
+    "roll": "4",
+    "marks": 88
+  },
+  {
+    "name": "Neha Kapoor",
+    "roll": "5",
+    "marks": 65
+  },
+  {
+    "name": "Rahul Mehta",
+    "roll": "6",
+    "marks": 92
+  },
+  {
+    "name": "Amisha Jindal",
+    "roll": "7",
+    "marks": 89
+  },
+  {
+    "name": "Harshita Goyal",
+    "roll": "8",
+    "marks": 78
+  },
+  {
+    "name": "Anantika Soni",
+    "roll": "10",
+    "marks": 90
+  },
+  {
+    "name": "Raghav ",
+    "roll": "9",
+    "marks": 56
+  },
+  {
+    "name": "Arjun ",
+    "roll": "11",
+    "marks": 99
+  }
+]
