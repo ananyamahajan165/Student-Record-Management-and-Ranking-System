@@ -3,84 +3,77 @@ const path = require("path");
 
 const filePath = path.join(__dirname, "../students.json");
 
-// GET students
 exports.getStudents = (req, res) => {
-
-    const data = fs.readFileSync(filePath);
-    const students = JSON.parse(data);
-
-    res.json(students);
+    try {
+        const students = JSON.parse(fs.readFileSync(filePath));
+        res.json(students);
+    } catch (error) {
+        res.status(500).json({ message: "Error reading students file" });
+    }
 };
 
-// ADD student
 exports.addStudent = (req, res) => {
+    try {
+        const { name, roll, marks } = req.body;
 
-    const newStudent = req.body;
+        if (!name || !roll || !marks) {
+            return res.status(400).json({ message: "All fields required" });
+        }
 
-    const data = fs.readFileSync(filePath);
-    const students = JSON.parse(data);
+        const students = JSON.parse(fs.readFileSync(filePath));
 
-    students.push(newStudent);
+        const exists = students.find(s => s.roll === roll);
+        if (exists) {
+            return res.status(400).json({ message: "Roll already exists" });
+        }
 
-    fs.writeFileSync(filePath, JSON.stringify(students));
+        const newStudent = {
+            name,
+            roll,
+            marks: parseInt(marks)
+        };
 
-    res.send("Student added");
+        students.push(newStudent);
+
+        fs.writeFileSync(filePath, JSON.stringify(students, null, 2));
+
+        res.json({ message: "Student added successfully" });
+
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
 };
 
-// DELETE student
-exports.deleteStudent = (req, res) => {
-
-    const id = req.params.id;
-
-    const data = fs.readFileSync(filePath);
-    let students = JSON.parse(data);
-
-    students = students.filter(s => s.id != id);
-
-    fs.writeFileSync(filePath, JSON.stringify(students));
-
-    res.send("Student deleted");
-};
-
-// RANKING
 exports.getRanking = (req, res) => {
+    try {
+        let students = JSON.parse(fs.readFileSync(filePath));
 
-    const data = fs.readFileSync(filePath);
-    let students = JSON.parse(data);
+        students.sort((a, b) => b.marks - a.marks);
 
-    students.sort((a,b)=> b.marks - a.marks);
+        students.forEach((s, i) => {
+            s.rank = i + 1;
+        });
 
-    students.forEach((s,i)=>{
-        s.rank = i+1;
-    });
+        res.json(students);
 
-    res.json(students);
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
 };
 
-exports.updateStudent = (req, res) => {
+exports.deleteStudent = (req, res) => {
+    try {
+        const roll = req.params.roll;
 
-    const id = req.params.id;
-    const updatedData = req.body;
+        let students = JSON.parse(fs.readFileSync(filePath));
 
-    const data = fs.readFileSync(filePath);
-    let students = JSON.parse(data);
+        students = students.filter(s => s.roll !== roll);
 
-    students = students.map(s =>
-        s.id == id ? { ...s, ...updatedData } : s
-    );
+        fs.writeFileSync(filePath, JSON.stringify(students, null, 2));
 
-    fs.writeFileSync(filePath, JSON.stringify(students));
+        res.json({ message: "Student deleted" });
 
-    res.send("Student updated");
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
 };
-
-exports.getTopper = (req,res)=>{
-
- const data = fs.readFileSync(filePath);
- const students = JSON.parse(data);
-
- const topper = students.sort((a,b)=>b.marks-a.marks)[0];
-
- res.json(topper);
-
-}
