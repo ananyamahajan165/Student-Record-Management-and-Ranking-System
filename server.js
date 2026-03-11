@@ -9,30 +9,31 @@ const studentRoutes = require("./routes/studentRoutes");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Logger middleware
 app.use((req, res, next) => {
     console.log(req.method, req.url);
     next();
 });
 
+// Static files
 app.use(express.static("public"));
 
+// Routers
 app.use("/", studentRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
-
-app.use((req, res) => {
-    res.status(404).send("Page not found");
-});
-
+// Error middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send("Something went wrong!");
 });
 
+// 404 handler
 app.use((req, res) => {
     res.status(404).send("Page not found");
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
 
 
