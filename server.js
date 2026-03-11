@@ -9,12 +9,21 @@ const studentRoutes = require("./routes/studentRoutes");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+    console.log(req.method, req.url);
+    next();
+});
+
 app.use(express.static("public"));
 
 app.use("/", studentRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+});
+
+app.use((req, res) => {
+    res.status(404).send("Page not found");
 });
 
 app.use((err, req, res, next) => {
